@@ -1,0 +1,210 @@
+{
+  "project_info": {
+    "project_number": "9818968821",
+    "project_id": "rn-push-not",
+    "storage_bucket": "rn-push-not.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:9818968821:android:9ad5dc48d997867377abbc",
+        "android_client_info": {
+          "package_name": "com.incodes.storybox"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "9818968821-id3ko9262j33t3d3im5e882d098458k5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.incodes.storybox",
+            "certificate_hash": "1d035336daaa1179949f7b20ba379d8bbddc5a37"
+          }
+        },
+        {
+          "client_id": "9818968821-0kaa9vjdnuancqdps1qgafjp0m34qkir.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5_lqT7yxoC4drt2-yXk7ENbwFUAoVwbg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "9818968821-0kaa9vjdnuancqdps1qgafjp0m34qkir.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "9818968821-2sbtif8vplb92pn03pjru0526uhmbki7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.omar.surrail"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:9818968821:android:fd5449c31a548b2c77abbc",
+        "android_client_info": {
+          "package_name": "com.lezart.Filantrope"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "9818968821-0kaa9vjdnuancqdps1qgafjp0m34qkir.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5_lqT7yxoC4drt2-yXk7ENbwFUAoVwbg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "9818968821-0kaa9vjdnuancqdps1qgafjp0m34qkir.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "9818968821-2sbtif8vplb92pn03pjru0526uhmbki7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.omar.surrail"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:9818968821:android:17e87fab2521c4ff77abbc",
+        "android_client_info": {
+          "package_name": "com.omar.chat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "9818968821-806f4b10bnju58jc4n3bucsv6pfsk624.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.omar.chat",
+            "certificate_hash": "90f972156ac94153f9b7d5c4023c175f03505748"
+          }
+        },
+        {
+          "client_id": "9818968821-9qfru0cfrer7dcn7996601cn9gifijo2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.omar.chat",
+            "certificate_hash": "17b377d9cfa18498febfde44810aed63b0e6cb61"
+          }
+        },
+        {
+          "client_id": "9818968821-h07s8dodtpe8illqruvsfnojlunqnpr9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.omar.chat",
+            "certificate_hash": "a9947234399d7eab6128a328dfcbfb5636460ee6"
+          }
+        },
+        {
+          "client_id": "9818968821-njpbrljosull95ri8qac4c5rl6q5vitt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.omar.chat",
+            "certificate_hash": "c8ed4684a510187edafbdaadab55db34d2ef913e"
+          }
+        },
+        {
+          "client_id": "9818968821-0kaa9vjdnuancqdps1qgafjp0m34qkir.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5_lqT7yxoC4drt2-yXk7ENbwFUAoVwbg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "9818968821-0kaa9vjdnuancqdps1qgafjp0m34qkir.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "9818968821-2sbtif8vplb92pn03pjru0526uhmbki7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.omar.surrail"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:9818968821:android:5c8ea33de36c42df77abbc",
+        "android_client_info": {
+          "package_name": "com.omar.surrail"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "9818968821-3qkgdqm7dafmvc0lsretu6hlto5j2503.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.omar.surrail",
+            "certificate_hash": "7d15c93ab12549eb77765c2ebca2643435870b81"
+          }
+        },
+        {
+          "client_id": "9818968821-op62t5vdd9i7me00rr73pkku7h8aknkb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.omar.surrail",
+            "certificate_hash": "8167bb969cc2c8d2aa17e8d5fab927c3d65f852c"
+          }
+        },
+        {
+          "client_id": "9818968821-0kaa9vjdnuancqdps1qgafjp0m34qkir.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5_lqT7yxoC4drt2-yXk7ENbwFUAoVwbg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "9818968821-0kaa9vjdnuancqdps1qgafjp0m34qkir.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "9818968821-2sbtif8vplb92pn03pjru0526uhmbki7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.omar.surrail"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

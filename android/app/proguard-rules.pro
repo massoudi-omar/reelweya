@@ -1,0 +1,2 @@
+-keep class com.stripe.android.** { *; }
+-keep class com.stripe.android.paymentsheet.** { *; }
