@@ -171,7 +171,7 @@ class SettingViewPage extends StatelessWidget {
     minLaunches: 10,
     remindDays: 7,
     remindLaunches: 10,
-    googlePlayIdentifier: 'com.incodes.storybox',
+    googlePlayIdentifier: 'com.incodes.reelweya',
     appStoreIdentifier: '1491556149',
   );
 

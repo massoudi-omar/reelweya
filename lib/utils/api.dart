@@ -3,7 +3,7 @@ import 'debug.dart';
 abstract class ApiConstant {
   /// --------------- API URLS -----------------------
 
- 
+
   static const localURL = "http://192.168.1.41:6054/";
 
   static getBaseURL() {

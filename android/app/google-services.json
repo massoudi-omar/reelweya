@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:9818968821:android:9ad5dc48d997867377abbc",
         "android_client_info": {
-          "package_name": "com.incodes.storybox"
+          "package_name": "com.incodes.reelweya"
         }
       },
       "oauth_client": [
@@ -17,7 +17,7 @@
           "client_id": "9818968821-id3ko9262j33t3d3im5e882d098458k5.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.incodes.storybox",
+            "package_name": "com.incodes.reelweya",
             "certificate_hash": "1d035336daaa1179949f7b20ba379d8bbddc5a37"
           }
         },
