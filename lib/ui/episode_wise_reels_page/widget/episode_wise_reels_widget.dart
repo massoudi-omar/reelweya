@@ -1524,6 +1524,8 @@ class _PremiumBottomSheetState extends State<PremiumBottomSheet> {
   final profileController = Get.find<ProfileController>();
   final controller = Get.find<EpisodeWiseReelsController>();
 
+  bool isCustomAdLoading = false;
+
   late bool isAutoUnlock = controller.isAutoUnlock; // per-series from API
 
   void toggleAutoUnlock() async {
@@ -1542,6 +1544,7 @@ class _PremiumBottomSheetState extends State<PremiumBottomSheet> {
           shortVideoId: widget.shortVideoId ?? "",
         );
       }
+
       // Immediately unlock with coins → closes sheet → plays video
       widget.callback?.call();
     }
@@ -1554,7 +1557,8 @@ class _PremiumBottomSheetState extends State<PremiumBottomSheet> {
         shortVideoId: widget.shortVideoId ?? "",
       );
     }
-  }
+  
+}
 
   @override
   Widget build(BuildContext context) {

@@ -488,7 +488,6 @@ import 'package:story_box/utils/utils.dart';
 //   }
 // }
 
-
 class LoginPageController extends GetxController {
   LoginUserModel? loginUserModel;
   PhoneController mobileController = PhoneController(
@@ -536,53 +535,114 @@ class LoginPageController extends GetxController {
     update([Constant.onLoginType]);
   }
 
-  /// Google Login
-  Future<void> onGoogleLogin() async {
-    try {
-      Get.dialog(const CustomProgressDialog());
 
-      UserCredential? userCredential = await signInWithGoogle();
+/// Google Login
+Future<void> onGoogleLogin() async {
+  try {
+    log("========== STEP 1: GOOGLE LOGIN START ==========");
 
-      if (userCredential?.user?.email != null) {
-        loginUserModel = await LoginApi.callApi(
-          loginType: Utils.getLoginTypeValue(LoginType.GOOGLE),
-          email: userCredential?.user?.email ?? "",
-          identity: Preference.identity,
-          fcmToken: Preference.fcmToken,
-          name: userCredential?.user?.displayName ?? "",
-          profilePic: userCredential?.user?.photoURL ?? '',
-        );
+    Get.dialog(const CustomProgressDialog());
 
-        if (loginUserModel != null) {
-          if (loginUserModel?.status == true) {
-            String loginUserJson = jsonEncode(loginUserModel?.user?.toJson());
-            await Preference.shared.setString(Preference.userData, loginUserJson);
-            await Preference.onSetUserID(loginUserModel?.user?.id ?? "");
-            await Preference.onIsLogin(true);
-            Get.offAllNamed(AppRoutes.bottomBarPage);
-            log("message UserID :: ${Preference.userId}");
-          } else {
-            await _cleanupGoogleSession();
-            Utils.showToast(Get.context!, loginUserModel?.message ?? "");
-          }
+    log("========== STEP 2: CALLING signInWithGoogle() ==========");
+
+    UserCredential? userCredential = await signInWithGoogle();
+
+    log("========== STEP 3: signInWithGoogle() RETURNED ==========");
+    log("userCredential: $userCredential");
+    log("user: ${userCredential?.user}");
+    log("email: ${userCredential?.user?.email}");
+
+    if (userCredential?.user?.email != null) {
+      log("========== STEP 4: EMAIL EXISTS ==========");
+      log("Email: ${userCredential?.user?.email}");
+      log("Name: ${userCredential?.user?.displayName}");
+      log("Calling LoginApi...");
+
+      log("========== STEP 5: BEFORE LoginApi.callApi() ==========");
+
+      loginUserModel = await LoginApi.callApi(
+        loginType: Utils.getLoginTypeValue(LoginType.GOOGLE),
+        email: userCredential?.user?.email ?? "",
+        identity: Preference.identity,
+        fcmToken: Preference.fcmToken,
+        name: userCredential?.user?.displayName ?? "",
+        profilePic: userCredential?.user?.photoURL ?? '',
+      );
+
+      log("========== STEP 6: LoginApi.callApi() RETURNED ==========");
+      log("loginUserModel: $loginUserModel");
+      log("status: ${loginUserModel?.status}");
+      log("message: ${loginUserModel?.message}");
+
+      if (loginUserModel != null) {
+        if (loginUserModel?.status == true) {
+          log("========== STEP 7: BACKEND LOGIN SUCCESS ==========");
+
+          String loginUserJson =
+              jsonEncode(loginUserModel?.user?.toJson());
+
+          await Preference.shared
+              .setString(Preference.userData, loginUserJson);
+
+          await Preference.onSetUserID(
+              loginUserModel?.user?.id ?? "");
+
+          await Preference.onIsLogin(true);
+
+          Get.offAllNamed(AppRoutes.bottomBarPage);
+
+          log("UserID: ${Preference.userId}");
         } else {
+          log("========== STEP 7: BACKEND LOGIN FAILED ==========");
+          log("Backend message: ${loginUserModel?.message}");
+
           await _cleanupGoogleSession();
-          Utils.showToast(Get.context!, EnumLocal.txtLoginFailedPleaseTryAgain.name.tr);
+
+          Utils.showToast(
+            Get.context!,
+            loginUserModel?.message ?? "",
+          );
         }
       } else {
-        Utils.showToast(Get.context!, EnumLocal.txtSomeThingWentWrong.name.tr);
-        Utils.showLog("Google Login Failed !!");
+        log("========== STEP 7: LoginUserModel IS NULL ==========");
+
+        await _cleanupGoogleSession();
+
+        Utils.showToast(
+          Get.context!,
+          EnumLocal.txtLoginFailedPleaseTryAgain.name.tr,
+        );
       }
-    } catch (e) {
-      await _cleanupGoogleSession();
-      log("Error in Google Login: $e");
-      Utils.showToast(Get.context!, EnumLocal.txtAnErrorOccurredDuringLogin.name.tr);
-    } finally {
-      if (Get.isDialogOpen ?? false) {
-        Get.back();
-      }
+    } else {
+      log("========== STEP 4: NO GOOGLE EMAIL ==========");
+
+      Utils.showToast(
+        Get.context!,
+        EnumLocal.txtSomeThingWentWrong.name.tr,
+      );
+
+      Utils.showLog("Google Login Failed !!");
+    }
+  } catch (e, stackTrace) {
+    log("========== GOOGLE LOGIN EXCEPTION ==========");
+    log("ERROR: $e");
+    log("STACK TRACE: $stackTrace");
+
+    await _cleanupGoogleSession();
+
+    Utils.showToast(
+      Get.context!,
+      EnumLocal.txtAnErrorOccurredDuringLogin.name.tr,
+    );
+  } finally {
+    log("========== GOOGLE LOGIN FINISHED ==========");
+
+    if (Get.isDialogOpen ?? false) {
+      Get.back();
     }
   }
+}
+
 
   Future<void> _cleanupGoogleSession() async {
     try {
@@ -650,7 +710,8 @@ class LoginPageController extends GetxController {
         accessToken: appleCredential.authorizationCode,
       );
 
-      var auth = await FirebaseAuth.instance.signInWithCredential(oauthCredential);
+      var auth =
+          await FirebaseAuth.instance.signInWithCredential(oauthCredential);
       final user = auth.user;
 
       log("oauthCredential :: $oauthCredential");
@@ -696,7 +757,8 @@ class LoginPageController extends GetxController {
 
   /// Phone Number Verification - FIXED FOR iOS
   Future<void> onVerify() async {
-    final String phoneNumber = "$countryCode${mobileController.value.nsn.trim()}";
+    final String phoneNumber =
+        "$countryCode${mobileController.value.nsn.trim()}";
 
     Utils.showLog("onVerify Mobile Number => ${mobileController.value.nsn}");
     Utils.showLog("onVerify Mobile Number => $phoneNumber");
@@ -704,12 +766,14 @@ class LoginPageController extends GetxController {
     FocusManager.instance.primaryFocus?.unfocus();
 
     if (mobileController.value.nsn.trim().isEmpty) {
-      Utils.showToast(Get.context!, EnumLocal.txtPleaseEnterMobileNumber.name.tr);
+      Utils.showToast(
+          Get.context!, EnumLocal.txtPleaseEnterMobileNumber.name.tr);
       return;
     }
 
     if (isExpire) {
-      Utils.showToast(Get.context!, EnumLocal.txtVerificationFailedDueToMultipleAttempts.name.tr);
+      Utils.showToast(Get.context!,
+          EnumLocal.txtVerificationFailedDueToMultipleAttempts.name.tr);
       return;
     }
 
@@ -739,7 +803,6 @@ class LoginPageController extends GetxController {
 
             // IMPORTANT: Don't show OTP dialog, directly login
             await onMobileLogin();
-
           } catch (e) {
             Utils.showLog("Auto verification failed: $e");
 
@@ -756,7 +819,8 @@ class LoginPageController extends GetxController {
 
         verificationFailed: (FirebaseAuthException e) {
           if (e.code == "invalid-phone-number") {
-            Utils.showToast(Get.context!, EnumLocal.txtPleaseEnterCorrectMobileNumber.name.tr);
+            Utils.showToast(Get.context!,
+                EnumLocal.txtPleaseEnterCorrectMobileNumber.name.tr);
           } else {
             Utils.showLog("Verification Mobile Number Failed => $e");
             Utils.showToast(Get.context!, e.message ?? "");
@@ -773,7 +837,8 @@ class LoginPageController extends GetxController {
 
         codeSent: (String verificationId, int? resendToken) {
           this.verificationId = verificationId;
-          Utils.showToast(Get.context!, EnumLocal.txtVerificationCodeSend.name.tr);
+          Utils.showToast(
+              Get.context!, EnumLocal.txtVerificationCodeSend.name.tr);
 
           if (isLoading) {
             Get.back();
@@ -792,7 +857,8 @@ class LoginPageController extends GetxController {
             isExpire = false;
             update();
             Utils.showLog("Time Out Otp => $verificationId");
-            Utils.showToast(Get.context!, EnumLocal.txtVerificationTimeout.name.tr);
+            Utils.showToast(
+                Get.context!, EnumLocal.txtVerificationTimeout.name.tr);
           } else {
             isExpire = false;
             update();
@@ -816,7 +882,8 @@ class LoginPageController extends GetxController {
     Utils.showLog("Enter Otp => ${otpController.text}");
 
     if (otpController.text.trim().isEmpty) {
-      Utils.showToast(Get.context!, EnumLocal.txtPleaseEnterVerificationCode.name.tr);
+      Utils.showToast(
+          Get.context!, EnumLocal.txtPleaseEnterVerificationCode.name.tr);
       return;
     }
 
@@ -828,7 +895,8 @@ class LoginPageController extends GetxController {
         smsCode: otpController.text.trim(),
       );
 
-      UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithCredential(credential);
 
       Utils.showLog("Verification Success => ${userCredential.user?.uid}");
 
@@ -836,7 +904,8 @@ class LoginPageController extends GetxController {
 
       await onMobileLogin();
       otpController.clear();
-      mobileController = PhoneController(initialValue: PhoneNumber(isoCode: IsoCode.IN, nsn: ""));
+      mobileController = PhoneController(
+          initialValue: PhoneNumber(isoCode: IsoCode.IN, nsn: ""));
     } on FirebaseAuthException catch (e) {
       if (e.code == "invalid-verification-code") {
         Utils.showToast(Get.context!, "Invalid Verification Code");
@@ -960,17 +1029,20 @@ class LoginPageController extends GetxController {
         return null;
       }
 
-      final GoogleSignInAuthentication? googleAuth = await googleUser.authentication;
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser.authentication;
 
       final credential = GoogleAuthProvider.credential(
         accessToken: googleAuth?.accessToken,
         idToken: googleAuth?.idToken,
       );
 
-      final result = await FirebaseAuth.instance.signInWithCredential(credential);
+      final result =
+          await FirebaseAuth.instance.signInWithCredential(credential);
 
       Utils.showLog("Google Login Email => ${result.user?.email}");
-      Utils.showLog("Google Login isNewUser => ${result.additionalUserInfo?.isNewUser}");
+      Utils.showLog(
+          "Google Login isNewUser => ${result.additionalUserInfo?.isNewUser}");
 
       return result;
     } catch (error) {

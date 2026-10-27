@@ -29,7 +29,8 @@ class BottomBarController extends GetxController {
   LoginUserModel? loginUserModel;
   GetDailyRewardModel? getDailyRewardModel;
   Future<void> presentCoins() async {
-    getDailyRewardModel = await GetDailyRewardApi.callApi(loginUserId: Preference.userId);
+    getDailyRewardModel =
+        await GetDailyRewardApi.callApi(loginUserId: Preference.userId);
     await Preference.onSetUserCoin(getDailyRewardModel?.totalCoins ?? 0);
   }
 
@@ -51,16 +52,32 @@ class BottomBarController extends GetxController {
     }
   }
 
+  // @override
+  // void onInit() {
+  //   log("INIT ::");
+  //   GoogleRewardAd.loadAd();
+  //   profileApiCall();
+  //   presentCoins();
+  //   DeepLinkServices.onChangeRoutes(isBottomBarRoutes: true);
+  //   PremiumManager.instance.subscriptionStream.listen((isPremium) {
+  //     PremiumManager.instance.hasActiveSubscription.value = isPremium;
+  //   });
+  //   super.onInit();
+  // }
+
   @override
   void onInit() {
     log("INIT ::");
-    GoogleRewardAd.loadAd();
+
     profileApiCall();
     presentCoins();
+
     DeepLinkServices.onChangeRoutes(isBottomBarRoutes: true);
+
     PremiumManager.instance.subscriptionStream.listen((isPremium) {
       PremiumManager.instance.hasActiveSubscription.value = isPremium;
     });
+
     super.onInit();
   }
 

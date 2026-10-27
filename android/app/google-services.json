@@ -7,9 +7,53 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:9818968821:android:9ad5dc48d997867377abbc",
+        "mobilesdk_app_id": "1:9818968821:android:fc14f133a2d9340877abbc",
         "android_client_info": {
           "package_name": "com.incodes.reelweya"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "9818968821-411k5bf735irb5ivq0ouubhqvaorbieh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.incodes.reelweya",
+            "certificate_hash": "1d035336daaa1179949f7b20ba379d8bbddc5a37"
+          }
+        },
+        {
+          "client_id": "9818968821-0kaa9vjdnuancqdps1qgafjp0m34qkir.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5_lqT7yxoC4drt2-yXk7ENbwFUAoVwbg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "9818968821-0kaa9vjdnuancqdps1qgafjp0m34qkir.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "9818968821-2sbtif8vplb92pn03pjru0526uhmbki7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.omar.surrail"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:9818968821:android:9ad5dc48d997867377abbc",
+        "android_client_info": {
+          "package_name": "com.incodes.storybox"
         }
       },
       "oauth_client": [
@@ -17,7 +61,7 @@
           "client_id": "9818968821-id3ko9262j33t3d3im5e882d098458k5.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.incodes.reelweya",
+            "package_name": "com.incodes.storybox",
             "certificate_hash": "1d035336daaa1179949f7b20ba379d8bbddc5a37"
           }
         },

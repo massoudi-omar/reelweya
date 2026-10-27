@@ -21,6 +21,7 @@ import 'package:story_box/utils/custom_progress_dialog.dart';
 import 'package:story_box/utils/preference.dart';
 import 'package:story_box/utils/utils.dart';
 import 'package:vibration/vibration.dart';
+import 'package:story_box/utils/custom_reward_ad.dart';
 
 class EpisodeWiseReelsController extends GetxController {
   PreloadPageController preloadPageController = PreloadPageController();
@@ -38,7 +39,8 @@ class EpisodeWiseReelsController extends GetxController {
   bool isVideoCompleted = false;
 
   // Auto-unlock toggle — per web-series from API response
-  bool get isAutoUnlock => fetchEpisodeWiseReelsModel?.isAutoUnlockEnabled ?? false;
+  bool get isAutoUnlock =>
+      fetchEpisodeWiseReelsModel?.isAutoUnlockEnabled ?? false;
 
   List<Videos> mainReels = [];
   FetchEpisodeWiseReelsModel? fetchEpisodeWiseReelsModel;
@@ -51,33 +53,59 @@ class EpisodeWiseReelsController extends GetxController {
   // Mutex: prevents overlapping unlock/page-change operations
   bool isPageChanging = false;
 
-  // ── Init ───────────────────────────────────────────────────────────────────
+  // // ── Init ───────────────────────────────────────────────────────────────────
+  // Future<void> init() async {
+  //   final args = Get.arguments as Map<String, dynamic>? ?? {};
+
+  //   if (movieSeriesId == null) {
+  //     movieSeriesId = args['movieSeriesId']?.toString();
+  //     totalVideos = args['totalVideos'] as int?;
+  //     isNavigateOnHome = (args['isNavigateOnHome'] as bool?) ?? false;
+  //   }
+
+  //   currentPageIndex = 0;
+  //   mainReels.clear();
+  //   isLoadingReels = true;
+  //   update(['reels']);
+
+  //   FetchEpisodeWiseReelsApi.startPagination = 0;
+  //   await fetchReels();
+
+  //   // Show episode list if deep-linked
+  //   if (isNavigateOnHome) {
+  //     WidgetsBinding.instance.addPostFrameCallback((e) {
+  //       Get.bottomSheet(const ShowAllEpisodeBottomSheet());
+  //     });
+  //   }
+
+  //   GoogleRewardAd.loadAd();
+  // }
+
   Future<void> init() async {
-    final args = Get.arguments as Map<String, dynamic>? ?? {};
+  final args = Get.arguments as Map<String, dynamic>? ?? {};
 
-    if (movieSeriesId == null) {
-      movieSeriesId = args['movieSeriesId']?.toString();
-      totalVideos = args['totalVideos'] as int?;
-      isNavigateOnHome = (args['isNavigateOnHome'] as bool?) ?? false;
-    }
-
-    currentPageIndex = 0;
-    mainReels.clear();
-    isLoadingReels = true;
-    update(['reels']);
-
-    FetchEpisodeWiseReelsApi.startPagination = 0;
-    await fetchReels();
-
-    // Show episode list if deep-linked
-    if (isNavigateOnHome) {
-      WidgetsBinding.instance.addPostFrameCallback((e) {
-        Get.bottomSheet(const ShowAllEpisodeBottomSheet());
-      });
-    }
-
-    GoogleRewardAd.loadAd();
+  if (movieSeriesId == null) {
+    movieSeriesId = args['movieSeriesId']?.toString();
+    totalVideos = args['totalVideos'] as int?;
+    isNavigateOnHome =
+        (args['isNavigateOnHome'] as bool?) ?? false;
   }
+
+  currentPageIndex = 0;
+  mainReels.clear();
+  isLoadingReels = true;
+  update(['reels']);
+
+  FetchEpisodeWiseReelsApi.startPagination = 0;
+  await fetchReels();
+
+  // Show episode list if deep-linked
+  if (isNavigateOnHome) {
+    WidgetsBinding.instance.addPostFrameCallback((e) {
+      Get.bottomSheet(const ShowAllEpisodeBottomSheet());
+    });
+  }
+}
 
   Future<void> fetchReels() async {
     fetchEpisodeWiseReelsModel = await FetchEpisodeWiseReelsApi.callApi(
@@ -90,9 +118,11 @@ class EpisodeWiseReelsController extends GetxController {
     if (videos.isNotEmpty) {
       mainReels.addAll(videos);
       totalVideos = fetchEpisodeWiseReelsModel?.totalVideosCount ?? totalVideos;
-      episodeUnlockAdsCount = fetchEpisodeWiseReelsModel?.userInfo?.episodeUnlockAds ?? 0;
+      episodeUnlockAdsCount =
+          fetchEpisodeWiseReelsModel?.userInfo?.episodeUnlockAds ?? 0;
       isFavorite.value = fetchEpisodeWiseReelsModel?.data?.isAddedList ?? false;
-      favoriteCount.value = fetchEpisodeWiseReelsModel?.data?.totalAddedToList ?? 0;
+      favoriteCount.value =
+          fetchEpisodeWiseReelsModel?.data?.totalAddedToList ?? 0;
     }
 
     isLoadingReels = false;
@@ -137,8 +167,11 @@ class EpisodeWiseReelsController extends GetxController {
           shortVideoId: video.id,
           coin: video.coin ?? 0,
           videoId: video.id,
-          episodeUnlockCount: fetchEpisodeWiseReelsModel?.userInfo?.episodeUnlockAds ?? 0,
-          maxCount: fetchEpisodeWiseReelsModel?.data?.movieSeriesMaxAdsForFreeView ?? 0,
+          episodeUnlockCount:
+              fetchEpisodeWiseReelsModel?.userInfo?.episodeUnlockAds ?? 0,
+          maxCount:
+              fetchEpisodeWiseReelsModel?.data?.movieSeriesMaxAdsForFreeView ??
+                  0,
           callback: () {
             if (Preference.isVip == false) {
               unlockWithCoins(
@@ -200,7 +233,8 @@ class EpisodeWiseReelsController extends GetxController {
     final next = mainReels[nextIndex];
     if (next.isLocked != true) return; // already unlocked
 
-    if ((next.coin ?? 0) <= (profileController.loginUserModel?.user?.coin ?? 0)) {
+    if ((next.coin ?? 0) <=
+        (profileController.loginUserModel?.user?.coin ?? 0)) {
       await autoDeductWatchVideoApi(videoId: next.id);
       next.isLocked = false;
     } else {
@@ -238,17 +272,33 @@ class EpisodeWiseReelsController extends GetxController {
   }
 
   // ── Called from PremiumBottomSheet ad option ───────────────────────────────
+  // Future<void> unlockWithAd({required String? videoId, int? index}) async {
+  //   await GoogleRewardAd.showAd(fun: () async {
+  //     await WatchAdUnlockVideoApi.callApi(
+  //       loginUserId: Preference.userId,
+  //       movieWebseriesId: movieSeriesId ?? '',
+  //       shortVideoId: videoId ?? '',
+  //     );
+  //     episodeUnlockAdsCount++;
+  //     mainReels[index ?? 0].isLocked = false;
+  //     update(['reels']);
+  //   });
+  // }
+
   Future<void> unlockWithAd({required String? videoId, int? index}) async {
-    await GoogleRewardAd.showAd(fun: () async {
-      await WatchAdUnlockVideoApi.callApi(
-        loginUserId: Preference.userId,
-        movieWebseriesId: movieSeriesId ?? '',
-        shortVideoId: videoId ?? '',
-      );
-      episodeUnlockAdsCount++;
-      mainReels[index ?? 0].isLocked = false;
-      update(['reels']);
-    });
+    await CustomRewardAd.showAd(
+      fun: () async {
+        await WatchAdUnlockVideoApi.callApi(
+          loginUserId: Preference.userId,
+          movieWebseriesId: movieSeriesId ?? '',
+          shortVideoId: videoId ?? '',
+        );
+
+        episodeUnlockAdsCount++;
+        mainReels[index ?? 0].isLocked = false;
+        update(['reels']);
+      },
+    );
   }
 
   // ── Auto-unlock toggle (from PremiumBottomSheet checkbox) ──────────────────

@@ -9,12 +9,13 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
-    <application
-        android:label="ReelWeya"
-        android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher"
-        android:largeHeap="true"
-        android:hardwareAccelerated="true">
+ <application
+    android:usesCleartextTraffic="true"
+    android:label="ReelWeya"
+    android:name="${applicationName}"
+    android:icon="@mipmap/ic_launcher"
+    android:largeHeap="true"
+    android:hardwareAccelerated="true">
 
         <activity
             android:name=".MainActivity"
@@ -66,7 +67,7 @@
         <!-- Google Ads Configuration -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3940256099942544~3347511713"/>
+            android:value="ca-app-pub-3036408786854753~6529168683"/>
 
     </application>
     <queries>

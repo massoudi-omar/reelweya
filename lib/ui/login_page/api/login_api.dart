@@ -40,15 +40,37 @@ class LoginApi {
               Params.profilePic: profilePic,
             });
 
-      log("Login Quick Body :: $body");
+      print("========== LOGIN API DEBUG ==========");
+      print("Login Type :: $loginType");
+      print("Email :: $email");
+      print("Identity :: $identity");
+      print("FCM Token :: $fcmToken");
+      print("Name :: $name");
+      print("Profile Pic :: $profilePic");
+      print("Login Body :: $body");
 
       final url = Uri.parse(ApiConstant.getBaseURL() + ApiConstant.login);
       log("Login Quick Url :: $url");
 
-      final headers = {"key": ApiConstant.SECRET_KEY, 'Content-Type': 'application/json'};
+      final headers = {
+        "key": ApiConstant.SECRET_KEY,
+        'Content-Type': 'application/json'
+      };
       log("Login Quick Headers :: $headers");
 
-      final response = await http.post(url, headers: headers, body: body);
+   print("========== SENDING LOGIN REQUEST ==========");
+print("URL => $url");
+print("REQUEST STARTED");
+
+final response = await http.post(
+  url,
+  headers: headers,
+  body: body,
+);
+
+print("REQUEST FINISHED");
+print("STATUS CODE => ${response.statusCode}");
+print("RESPONSE => ${response.body}");
 
       log("Login Quick Status Code :: ${response.statusCode}");
       log("Login Quick Response :: ${response.body}");

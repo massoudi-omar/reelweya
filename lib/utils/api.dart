@@ -4,7 +4,8 @@ abstract class ApiConstant {
   /// --------------- API URLS -----------------------
 
 
-  static const localURL = "http://192.168.1.41:6054/";
+  static const localURL =
+      "http://192.168.1.41:6054/";
 
   static getBaseURL() {
     if (Debug.isLocal) {
@@ -74,4 +75,5 @@ abstract class ApiConstant {
   static const fetchAll = "api/client/translation/findAll";
   static const fetchLanguageTranslations = "api/client/translation/find";
   static const fetchLatestLanguageVersion = "api/client/translation/latestVersion";
+  static const ads = "api/ads";
 }

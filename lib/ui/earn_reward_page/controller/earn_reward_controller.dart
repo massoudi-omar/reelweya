@@ -22,6 +22,7 @@ import 'package:story_box/ui/profile_page/api/profile_api.dart';
 import 'package:story_box/utils/color.dart';
 import 'package:story_box/utils/preference.dart';
 import 'package:story_box/utils/utils.dart';
+import 'package:story_box/utils/custom_reward_ad.dart';
 
 class EarnRewardController extends GetxController {
   // >>>> Ad Reward <<<<<
@@ -129,7 +130,8 @@ class EarnRewardController extends GetxController {
       nextAdTaskTime = adRewards[newIndex].adDisplayInterval ?? 0;
       Preference.onSetNextAdTaskTime(nextAdTaskTime);
 
-      Utils.showLog("Ad Reward Save Preference => $completeAdTask ${Preference.nextAdTaskTimes}");
+      Utils.showLog(
+          "Ad Reward Save Preference => $completeAdTask ${Preference.nextAdTaskTimes}");
       update(["onChangeAdReward"]);
 
       onStartTimer();
@@ -190,7 +192,8 @@ class EarnRewardController extends GetxController {
   void onOpenApp() async {
     if (Preference.nextAdTaskTimes != 0) {
       DateTime now = DateTime.now();
-      DateTime lastDateTime = DateTime.parse(Preference.lastRewardDates ?? now.toString());
+      DateTime lastDateTime =
+          DateTime.parse(Preference.lastRewardDates ?? now.toString());
       Duration difference = now.difference(lastDateTime);
       int seconds = difference.inSeconds;
 
@@ -261,18 +264,38 @@ class EarnRewardController extends GetxController {
     }
   }
 
+  // void onClickPlay(int index) async {
+  //   Utils.showLog("Click To Index => $index");
+
+  //   if (index == completeAdTask && isEnableCurrentAdTask) {
+  //     Utils.showLog("Show Ad Success");
+
+  //     /// Ad show success
+  //     GoogleRewardAd.showAd(fun: () {
+  //       onShowAd(index);
+  //       onCreateAdReward(adRewards[index].coinEarnedFromAd ?? 0);
+  //     });
+  //   }
+  //   update(['onChangeAdReward']);
+  // }
+
   void onClickPlay(int index) async {
     Utils.showLog("Click To Index => $index");
 
     if (index == completeAdTask && isEnableCurrentAdTask) {
-      Utils.showLog("Show Ad Success");
+      Utils.showLog("Show Custom Ad Success");
 
-      /// Ad show success
-      GoogleRewardAd.showAd(fun: () {
-        onShowAd(index);
-        onCreateAdReward(adRewards[index].coinEarnedFromAd ?? 0);
-      });
+      /// Show your own custom ad
+      CustomRewardAd.showAd(
+        fun: () async {
+          onShowAd(index);
+          onCreateAdReward(
+            adRewards[index].coinEarnedFromAd ?? 0,
+          );
+        },
+      );
     }
+
     update(['onChangeAdReward']);
   }
 
@@ -330,7 +353,8 @@ class EarnRewardController extends GetxController {
     update(["onGetDailyRewards"]);
 
     /// Daily reward api
-    getDailyRewardModel = await GetDailyRewardApi.callApi(loginUserId: Preference.userId);
+    getDailyRewardModel =
+        await GetDailyRewardApi.callApi(loginUserId: Preference.userId);
 
     if (getDailyRewardModel?.data?.isNotEmpty ?? false) {
       dailyRewards.clear();
@@ -355,7 +379,8 @@ class EarnRewardController extends GetxController {
     HapticFeedback.vibrate();
     if (isTodayCheckIn) {
     } else {
-      Get.dialog(const LoadingWidget(color: AppColor.colorPrimary), barrierDismissible: false);
+      Get.dialog(const LoadingWidget(color: AppColor.colorPrimary),
+          barrierDismissible: false);
 
       /// Check In api
 
